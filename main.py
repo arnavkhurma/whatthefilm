@@ -87,18 +87,20 @@ If nothing is discernible, return an empty string and nothing else.
                 )
                 ans = completion.choices[0].message.content
                 if len(ans) <= 5:
-                    st.write("length <= 5")
+                    # st.write("length <= 5")
                     st.write(f'''
                         <body style="display: flex; justify-content: center; align-items: center; background-color: #262730; width: 100%;">
                             <div style="width: 100%; border-radius: 10px; padding: 20px; box-sizing: border-box; background: #262730;">
                                 <div style="display: flex; flex-direction: column;">
-                                    <p style="margin: 10px 0; font-size: 16px; color: #fff;">Could not find a matching title.</p>
+                                    <h2 style="margin: 0; font-size: 24px; color: #fff;">Could not find a matching title.</h2>
+                                    <p style="margin: 10px 0; font-size: 16px; color: #fff;"></p>
+                                    <p style="margin: 10px 0; font-size: 16px; color: #fff;"></p>
                                 </div>
                             </div>
                         </body>
                     ''', unsafe_allow_html=True)
                 else:
-                    st.write("length > 5")
+                    # st.write("length > 5")
                     st.write(f'''
                         <body style="display: flex; justify-content: center; align-items: center; background-color: #262730; width: 100%;">
                             <div style="width: 100%; border-radius: 10px; padding: 20px; box-sizing: border-box; background: #262730;">
