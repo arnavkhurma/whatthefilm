@@ -2,7 +2,7 @@ import streamlit as st
 from propelauth import auth
 import io
 from PIL import Image
-from inference_sdk import InferenceHTTPClient # type: ignore
+from inference_sdk import InferenceHTTPClient
 from openai import OpenAI
 
 st.set_page_config(layout="wide")
