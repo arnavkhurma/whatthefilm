@@ -2,16 +2,10 @@ numpy
 pandas
 matplotlib
 opencv-python-headless
-opencv-python
 streamlit
-jupyter
-labelImg
 roboflow
 propelauth_py
 requests
-config
 openai
 sip
-requests
 inference_sdk
-pyopengl
