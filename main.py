@@ -98,18 +98,31 @@ If for some reason those parameters are not there in the json, I want you to ret
                         </body>
                     ''', unsafe_allow_html=True)
                 else:
+                    results = ans.split(";")
                     # st.write("length > 5")
-                    st.write(f'''
+                    try:
+                        st.write(f'''
+                            <body style="display: flex; justify-content: center; align-items: center; background-color: #262730; width: 100%;">
+                                <div style="width: 100%; border-radius: 10px; padding: 20px; box-sizing: border-box; background: #262730;">
+                                    <div style="display: flex; flex-direction: column;">
+                                        <h2 style="margin: 0; font-size: 24px; color: #fff;">{results[0]}</h2>
+                                        <p style="margin: 10px 0; font-size: 16px; color: #fff;">Played by: {results[1]}</p>
+                                        <p style="margin: 10px 0; font-size: 16px; color: #fff;">Watch on: {results[2]}</p>
+                                    </div>
+                                </div>
+                            </body>
+                        ''', unsafe_allow_html=True)
+                    except Exception as e:
+                        st.write(f'''
                         <body style="display: flex; justify-content: center; align-items: center; background-color: #262730; width: 100%;">
                             <div style="width: 100%; border-radius: 10px; padding: 20px; box-sizing: border-box; background: #262730;">
                                 <div style="display: flex; flex-direction: column;">
-                                    <h2 style="margin: 0; font-size: 24px; color: #fff;">{ans}</h2>
-                                    <p style="margin: 10px 0; font-size: 16px; color: #fff;">Played by: {ans}</p>
-                                    <p style="margin: 10px 0; font-size: 16px; color: #fff;">Watch on: {ans}</p>
+                                    <h2 style="margin: 0; font-size: 24px; color: #fff;">Could not find a matching title.</h2>
+                                    <p style="margin: 10px 0; font-size: 16px; color: #fff;">Could not find a matching title.</p>
+                                    <p style="margin: 10px 0; font-size: 16px; color: #fff;">Could not find a matching title.</p>
                                 </div>
                             </div>
                         </body>
                     ''', unsafe_allow_html=True)
-                
             except Exception as e:
                 st.error(f"Error processing image: {e}")
