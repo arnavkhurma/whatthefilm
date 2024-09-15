@@ -1,0 +1,13 @@
+numpy
+pandas
+matplotlib
+opencv-python
+streamlit
+jupyter
+labelImg
+roboflow
+propelauth_py
+requests
+config
+openai
+sip
