@@ -1,7 +1,7 @@
 numpy
 pandas
 matplotlib
-opencv-python
+opencv-python-headless
 streamlit
 jupyter
 labelImg
@@ -12,4 +12,3 @@ config
 openai
 sip
 requests
-cv2
