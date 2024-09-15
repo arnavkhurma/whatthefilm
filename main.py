@@ -1,20 +1,21 @@
 import streamlit as st
 from propelauth import auth
-from PIL import Image
 import io
+from PIL import Image
 from inference_sdk import InferenceHTTPClient
 from openai import OpenAI
-import config
 
 st.set_page_config(layout="wide")
 
 # PROPEL AUTH AUTHENTICATION
 user = auth.get_user()
 if user is None:
+    st.write("Redirect to http//:localhost:8000")
     st.stop()
 # SIDEBAR
 with st.sidebar:
-    st.image("static/logo.jpeg")
+    st.image("static/logo.png")
+    # st.header("WHATTHEFILM")
     st.markdown("---")
     if user is None:
         st.text("Not Signed in")
@@ -22,15 +23,15 @@ with st.sidebar:
         st.text(f"Signed in as {user.email}")
         st.link_button('MY ACCOUNT', auth.get_account_url(), use_container_width=True)
         st.link_button('LOG OUT', auth.get_account_url(), use_container_width=True)
-    st.link_button('PAST SEARCHES', auth.get_account_url(), use_container_width=True)
 
 # MAIN PAGE
 col1, col2 = st.columns(2)
 with col1:
-    st.header("Upload or Snap a Photo to Find Your Film")
+    st.header("Upload Image")
     model_picture = None
-    picture = st.camera_input("Upload to Identify")
-    df = st.file_uploader(label='Upload to Identify')
+    picture = st.camera_input("")
+    st.markdown("<p style='text-align: center;'>OR</p>", unsafe_allow_html=True)
+    df = st.file_uploader(label='')
 
     # Determine if picture or uploaded file should be used
     if df is not None:
@@ -40,7 +41,7 @@ with col1:
 
 with col2:
     if model_picture is not None:
-        st.header("Results:")
+        st.header("Your Results")
         if st.button('Find the Movie'):
             image_bytes = None
             try:
@@ -61,11 +62,11 @@ with col2:
                 # API CALL TO YOLO MODEL
                 CLIENT = InferenceHTTPClient(
                     api_url="https://detect.roboflow.com",
-                    api_key=config.YOLO_API_KEY
+                    api_key= st.secrets["YOLO_API_KEY"]
                 )
                 result = CLIENT.infer("processed_image.jpg", model_id="whatthefilm/1")
                 ans = result['predictions']
-                client = OpenAI(api_key=config.OPENAI_API_KEY)
+                client = OpenAI(api_key= st.secrets["OPENAI_API_KEY"])
                 prompt = """
 Please provide the following information for the movie or TV series associated with the 'class' name of what they are playing from the json provided to you:
 1. Name of the movie/TV series.
@@ -84,22 +85,29 @@ If nothing is discernible, return an empty string and nothing else.
                         {"role": "user", "content": f"{prompt}. Content from Image: {result}"}
                     ]
                 )
-                if len(completion.choices[0].message.content) > 5:
-                    st.write((completion.choices[0].message.content))
-                name = ""
-                actors = ""
-                platforms = ""
-                st.write(f'''
-                    <body style="display: flex; justify-content: center; align-items: center; background-color: #f8f8f8; width: 100%;">
-                        <div style="width: 100%; border-radius: 10px; border: 1px solid black; padding: 20px; box-sizing: border-box;">
-                            <div style="display: flex; flex-direction: column;">
-                                <h2 style="margin: 0; font-size: 24px; color: #333;">{name}</h2>
-                                <p style="margin: 10px 0; font-size: 24px; color: #666;">{actors}</p>
-                                <p style="margin: 10px 0; font-size: 24px; color: #666;">{platforms}</p>
+                ans = completion.choices[0].message.content
+                if len(ans) <= 5:
+                    st.write(f'''
+                        <body style="display: flex; justify-content: center; align-items: center; background-color: #262730; width: 100%;">
+                            <div style="width: 100%; border-radius: 10px; padding: 20px; box-sizing: border-box; background: #262730;">
+                                <div style="display: flex; flex-direction: column;">
+                                    <p style="margin: 10px 0; font-size: 16px; color: #fff;">Could not find a matching title.</p>
+                                </div>
                             </div>
-                        </div>
-                    </body>
-                ''', unsafe_allow_html=True)
+                        </body>
+                    ''', unsafe_allow_html=True)
+                else:
+                    st.write(f'''
+                        <body style="display: flex; justify-content: center; align-items: center; background-color: #262730; width: 100%;">
+                            <div style="width: 100%; border-radius: 10px; padding: 20px; box-sizing: border-box; background: #262730;">
+                                <div style="display: flex; flex-direction: column;">
+                                    <h2 style="margin: 0; font-size: 24px; color: #fff;">{ans}</h2>
+                                    <p style="margin: 10px 0; font-size: 16px; color: #fff;">Played by: {ans}</p>
+                                    <p style="margin: 10px 0; font-size: 16px; color: #fff;">Watch on: {ans}</p>
+                                </div>
+                            </div>
+                        </body>
+                    ''', unsafe_allow_html=True)
                 
             except Exception as e:
                 st.error(f"Error processing image: {e}")

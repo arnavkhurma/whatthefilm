@@ -2,10 +2,9 @@ import streamlit as st
 from propelauth_py import init_base_auth, UnauthorizedException
 from streamlit.web.server.websocket_headers import _get_websocket_headers
 import requests
-import config
 
 AUTH_URL = "https://10549518275.propelauthtest.com"
-API_KEY = config.PROPELAUTH_API_KEY
+API_KEY = st.secrets["PROPELAUTH_API_KEY"]
 
 class Auth:
     def __init__(self, auth_url, integration_api_key):
