@@ -2,7 +2,7 @@ import streamlit as st
 from propelauth import auth
 import io
 from PIL import Image
-from inference_sdk import InferenceHTTPClient
+from inference_sdk import InferenceHTTPClient # type: ignore
 from openai import OpenAI
 
 st.set_page_config(layout="wide")
@@ -65,6 +65,7 @@ with col2:
                     api_key= st.secrets["YOLO_API_KEY"]
                 )
                 result = CLIENT.infer("processed_image.jpg", model_id="whatthefilm/1")
+                st.write(result)
                 ans = result['predictions']
                 client = OpenAI(api_key= st.secrets["OPENAI_API_KEY"])
                 prompt = """
@@ -87,6 +88,7 @@ If nothing is discernible, return an empty string and nothing else.
                 )
                 ans = completion.choices[0].message.content
                 if len(ans) <= 5:
+                    st.write("length <= 5")
                     st.write(f'''
                         <body style="display: flex; justify-content: center; align-items: center; background-color: #262730; width: 100%;">
                             <div style="width: 100%; border-radius: 10px; padding: 20px; box-sizing: border-box; background: #262730;">
@@ -97,6 +99,7 @@ If nothing is discernible, return an empty string and nothing else.
                         </body>
                     ''', unsafe_allow_html=True)
                 else:
+                    st.write("length > 5")
                     st.write(f'''
                         <body style="display: flex; justify-content: center; align-items: center; background-color: #262730; width: 100%;">
                             <div style="width: 100%; border-radius: 10px; padding: 20px; box-sizing: border-box; background: #262730;">
