@@ -60,29 +60,27 @@ with col2:
                     f.write(image_bytes)
                 st.success("Image added to profile successfully!")
 
-                # API CALL TO YOLO MODEL
                 CLIENT = InferenceHTTPClient(
                     api_url="https://detect.roboflow.com",
-                    api_key= st.secrets["YOLO_API_KEY"]
+                    api_key="9Z0H6GC6OOcFtLuouaFv"
                 )
-                result = CLIENT.infer("processed_image.jpg", model_id="whatthefilm/1")
+                result = CLIENT.infer("processed_image.jpg", model_id="whatthefilmfinal/1")
                 client = OpenAI(api_key= st.secrets["OPENAI_API_KEY"])
                 prompt = """
-Please provide the following information for the movie or TV series associated with the 'class' name of what they are playing from the json provided to you:
-1. Name of the movie/TV series.
-2. Popular actors that worked in it.
-3. Streaming platforms where it is available.
+I am using an object detection model that returns a json of its confidence and class metrics, 
+where 'class' returns the actor and the movie / show the picture can be from. I have copied the returned json below.
+I want you to give me information about the movie / show title, actors that were in it, and which streaming platform
+I can watch it on in the following format:
+<name of movie / show> ; <actors that were in it> ; <which streaming platform
+I can watch it on>
 
-Output in the format:
-<name of movie/tv series> \\n <popular actors> \\n <streaming platforms>
-
-If nothing is discernible, return an empty string and nothing else.
+If for some reason those parameters are not there in the json, I want you to return: ""
 """
 
                 completion = client.chat.completions.create(
-                    model="gpt-4o-mini",
+                    model="gpt-4o",
                     messages=[
-                        {"role": "user", "content": f"{prompt}. Content from Image: {result}"}
+                        {"role": "user", "content": f"{prompt}. JSON from Model: {result}"}
                     ]
                 )
                 ans = completion.choices[0].message.content
