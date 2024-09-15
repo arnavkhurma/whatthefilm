@@ -11,4 +11,5 @@ requests
 config
 openai
 sip
-inference-sdk
+requests
+cv2
