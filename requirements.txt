@@ -12,3 +12,4 @@ config
 openai
 sip
 requests
+inference_sdk
