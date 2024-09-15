@@ -9,9 +9,9 @@ st.set_page_config(layout="wide")
 
 # PROPEL AUTH AUTHENTICATION
 user = auth.get_user()
-if user is None:
-    st.write("Redirect to http//:localhost:8000")
-    st.stop()
+# if user is None:
+#     st.write("Redirect to http//:localhost:8000")
+#     st.stop()
 # SIDEBAR
 with st.sidebar:
     st.image("static/logo.png")
