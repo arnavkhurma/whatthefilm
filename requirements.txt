@@ -14,3 +14,4 @@ openai
 sip
 requests
 inference_sdk
+pyopengl
