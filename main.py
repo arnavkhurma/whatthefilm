@@ -59,10 +59,11 @@ with col2:
                 with open("processed_image.jpg", "wb") as f:
                     f.write(image_bytes)
                 st.success("Image added to profile successfully!")
+                st.image("processed_image.jpg")
 
                 CLIENT = InferenceHTTPClient(
                     api_url="https://detect.roboflow.com",
-                    api_key="9Z0H6GC6OOcFtLuouaFv"
+                    api_key=st.secrets["YOLO_API_KEY"]
                 )
                 result = CLIENT.infer("processed_image.jpg", model_id="whatthefilmfinal/1")
                 client = OpenAI(api_key= st.secrets["OPENAI_API_KEY"])
