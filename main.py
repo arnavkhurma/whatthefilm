@@ -19,6 +19,7 @@ with st.sidebar:
     st.markdown("---")
     if user is None:
         st.text("Not Signed in")
+        st.link_button('SIGN IN', auth.get_account_url(), use_container_width=True)
     else:
         st.text(f"Signed in as {user.email}")
         st.link_button('MY ACCOUNT', auth.get_account_url(), use_container_width=True)
