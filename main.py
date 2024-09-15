@@ -25,7 +25,7 @@ with st.sidebar:
         st.link_button('LOG OUT', auth.get_account_url(), use_container_width=True)
 
 # MAIN PAGE
-st.image("static/logo.png")
+st.image("static/logo.png", width=100)
 col1, col2 = st.columns(2)
 with col1:
     st.header("Upload Image")
