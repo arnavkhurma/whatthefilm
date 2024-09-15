@@ -93,8 +93,8 @@ If nothing is discernible, return an empty string and nothing else.
                             <div style="width: 100%; border-radius: 10px; padding: 20px; box-sizing: border-box; background: #262730;">
                                 <div style="display: flex; flex-direction: column;">
                                     <h2 style="margin: 0; font-size: 24px; color: #fff;">Could not find a matching title.</h2>
-                                    <p style="margin: 10px 0; font-size: 16px; color: #fff;"></p>
-                                    <p style="margin: 10px 0; font-size: 16px; color: #fff;"></p>
+                                    <p style="margin: 10px 0; font-size: 16px; color: #fff;">Could not find a matching title.</p>
+                                    <p style="margin: 10px 0; font-size: 16px; color: #fff;">Could not find a matching title.</p>
                                 </div>
                             </div>
                         </body>
