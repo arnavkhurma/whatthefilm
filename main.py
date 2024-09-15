@@ -66,8 +66,6 @@ with col2:
                     api_key= st.secrets["YOLO_API_KEY"]
                 )
                 result = CLIENT.infer("processed_image.jpg", model_id="whatthefilm/1")
-                st.write(result)
-                ans = result['predictions']
                 client = OpenAI(api_key= st.secrets["OPENAI_API_KEY"])
                 prompt = """
 Please provide the following information for the movie or TV series associated with the 'class' name of what they are playing from the json provided to you:
